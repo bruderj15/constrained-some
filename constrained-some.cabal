@@ -1,41 +1,46 @@
 cabal-version:      3.0
 name:               constrained-some
 version:            0.1.0.0
-synopsis:
-    Existential GADT-Wrapper that can be constrained on the type-level
-
+synopsis:           Existential type that can be constrained
 -- description:
 homepage:           https://github.com/bruderj15/constrained-some
+bug-reports:        https://github.com/bruderj15/constrained-some/issues
 license:            MIT
 license-file:       LICENSE
 author:             Julian Bruder
 maintainer:         julian.bruder@outlook.com
--- copyright:
-category:           Data
+copyright:          © 2024 Julian Bruder
+category:           Data, Dependent Types
 build-type:         Simple
+extra-source-files: README.md
 extra-doc-files:    CHANGELOG.md
--- extra-source-files:
+tested-with:
+  GHC ==8.6.5
+   || ==8.8.4
+   || ==8.10.4
+   || ==9.0.2
+   || ==9.2.8
+   || ==9.4.8
+   || ==9.6.5
+   || ==9.8.2
+   || ==9.10.1
 
 common warnings
     ghc-options: -Wall
 
 library
     import:           warnings
-    exposed-modules:  MyLib
-    -- other-modules:
-    -- other-extensions:
-    build-depends:    base ^>=4.20.0.0
+    exposed-modules:  Data.Some.Constraint
+    build-depends:    base >=4.12 && <4.21
     hs-source-dirs:   src
     default-language: GHC2021
 
 test-suite constrained-some-test
     import:           warnings
     default-language: GHC2021
-    -- other-modules:
-    -- other-extensions:
     type:             exitcode-stdio-1.0
     hs-source-dirs:   test
     main-is:          Main.hs
     build-depends:
-        base ^>=4.20.0.0,
+        base >=4.12 && <4.21,
         constrained-some
