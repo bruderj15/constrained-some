@@ -1,4 +1,4 @@
-[![Hackage](https://img.shields.io/hackage/v/constrained-some.svg)](https://hackage.haskell.org/package/constrained-some) ![Static Badge](https://img.shields.io/badge/Lang-Haskell2010-blue) [![Haskell-CI](https://github.com/bruderj15/constrained-some/actions/workflows/haskell-ci.yml/badge.svg)](https://github.com/bruderj15/Hasmtlib/actions/workflows/haskell-ci.yml) [![License: GPL v3](https://img.shields.io/badge/License-MIT-blue.svg)](https://mit-license.org/)
+[![Hackage](https://img.shields.io/hackage/v/constrained-some.svg)](https://hackage.haskell.org/package/constrained-some) ![Static Badge](https://img.shields.io/badge/Lang-Haskell2010-blue) [![Haskell-CI](https://github.com/bruderj15/constrained-some/actions/workflows/haskell-ci.yml/badge.svg)](https://github.com/bruderj15/constrained-some/actions/workflows/haskell-ci.yml) [![License: GPL v3](https://img.shields.io/badge/License-MIT-blue.svg)](https://mit-license.org/)
 
 # constrained-some
 

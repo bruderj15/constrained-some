@@ -11,7 +11,7 @@ module Data.Some.Constraint where
 import Data.Kind
 
 -- | AllC ensures that a list of 'Constraint's is applied to a poly-kinded 'Type' @k@.
-type AllC :: forall {k}. [k -> Constraint] -> k -> Constraint
+type AllC :: forall k. [k -> Constraint] -> k -> Constraint
 type family AllC cs k :: Constraint where
   AllC '[]       k = ()
   AllC (c ': cs) k = (c k, AllC cs k)
