@@ -1,6 +1,10 @@
 {-# LANGUAGE DataKinds #-}
+{-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE TypeFamilies #-}
 {-# LANGUAGE QuantifiedConstraints #-}
+{-# LANGUAGE StandaloneKindSignatures #-}
+{-# LANGUAGE TypeOperators #-}
+{-# LANGUAGE GADTs #-}
 
 module Data.Some.Constraint where
 
