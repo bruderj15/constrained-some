@@ -11,17 +11,19 @@ module Data.Some.Constraint where
 import Data.Kind
 
 -- | AllC ensures that a list of 'Constraint's is applied to a poly-kinded 'Type' @k@.
---
--- @
--- AllC '[]       k = ()
--- AllC (c ': cs) k = (c k, AllC cs k)
--- @
 type AllC :: forall {k}. [k -> Constraint] -> k -> Constraint
 type family AllC cs k :: Constraint where
   AllC '[]       k = ()
   AllC (c ': cs) k = (c k, AllC cs k)
 
 -- | Existential with 'Constraint's.
+--
+-- ==== __Example__
+--
+-- @
+-- someShowableOrd :: 'Somes' '['Show', 'Ord']
+-- someShowableOrd = 'Some' ('mempty' :: ['Double'])
+-- @
 data Somes cs where
   Some :: forall
     (cs :: [Type -> Constraint])
@@ -32,6 +34,13 @@ data Somes cs where
 type Some c = Somes '[c]
 
 -- | Existential for containers with 'Constraint's.
+--
+-- ==== __Example__
+--
+-- @
+-- someNumFunctor :: 'Somes1' '['Functor'] '['Num']
+-- someNumFunctor = 'Some1' $ [1, 2, 3 :: 'Int']
+-- @
 data Somes1 csf csa where
   Some1 :: forall
     k
