@@ -22,24 +22,24 @@ type family AllC cs k :: Constraint where
   AllC (c ': cs) k = (c k, AllC cs k)
 
 -- | Existential with 'Constraint's.
-data SomeCs cs where
+data Somes cs where
   Some :: forall
     (cs :: [Type -> Constraint])
     (a :: Type).
-    AllC cs a => a -> SomeCs cs
+    AllC cs a => a -> Somes cs
 
--- | Alias for 'SomeCs' with just one 'Constraint'.
-type Some c = SomeCs '[c]
+-- | Alias for 'Somes' with just one 'Constraint'.
+type Some c = Somes '[c]
 
 -- | Existential for containers with 'Constraint's.
-data Some1Cs csf csa where
+data Somes1 csf csa where
   Some1 :: forall
     k
     (csf :: [(k -> Type) -> Constraint])
     (csa :: [k -> Constraint])
     (f :: k -> Type)
     (a :: k).
-    (AllC csf f, AllC csa a) => f a -> Some1Cs csf csa
+    (AllC csf f, AllC csa a) => f a -> Somes1 csf csa
 
--- | Alias for 'Some1Cs' with just one 'Constraint'.
-type Some1 ca cf = Some1Cs '[ca] '[cf]
+-- | Alias for 'Somes1' with just one 'Constraint'.
+type Some1 ca cf = Somes1 '[ca] '[cf]
