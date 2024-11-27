@@ -3,7 +3,7 @@
 # constrained-some
 
 This library provides utilities for working with existential types and type-level constraints.
-It allows you to enforce multiple constraints on polymorphic types and containers offering a more reusable way than `some`.
+It allows you to enforce multiple constraints on polymorphic types and containers complementing `some`.
 
 ## Core
 

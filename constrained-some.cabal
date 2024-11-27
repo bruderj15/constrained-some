@@ -2,7 +2,8 @@ cabal-version:      3.0
 name:               constrained-some
 version:            0.1.0.0
 synopsis:           Existential type that can be constrained
--- description:
+description:        This library provides utilities for working with existential types and type-level constraints.
+  It allows you to enforce multiple constraints on polymorphic types and containers complementing the package some.
 homepage:           https://github.com/bruderj15/constrained-some
 bug-reports:        https://github.com/bruderj15/constrained-some/issues
 license:            MIT
