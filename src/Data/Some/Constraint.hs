@@ -51,4 +51,4 @@ data Somes1 csf csa where
     (AllC csf f, AllC csa a) => f a -> Somes1 csf csa
 
 -- | Alias for 'Somes1' with just one 'Constraint'.
-type Some1 ca cf = Somes1 '[ca] '[cf]
+type Some1 cf ca = Somes1 '[cf] '[ca]
