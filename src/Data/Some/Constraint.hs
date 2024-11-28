@@ -1,10 +1,14 @@
 {-# LANGUAGE DataKinds #-}
 {-# LANGUAGE PolyKinds #-}
 {-# LANGUAGE TypeFamilies #-}
-{-# LANGUAGE QuantifiedConstraints #-}
 {-# LANGUAGE StandaloneKindSignatures #-}
 {-# LANGUAGE TypeOperators #-}
 {-# LANGUAGE GADTs #-}
+{-# LANGUAGE FlexibleInstances #-}
+{-# LANGUAGE UndecidableInstances #-}
+{-# LANGUAGE TypeApplications #-}
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE ScopedTypeVariables #-}
 
 module Data.Some.Constraint where
 
@@ -52,3 +56,9 @@ data Somes1 csf csa where
 
 -- | Alias for 'Somes1' with just one 'Constraint'.
 type Some1 cf ca = Somes1 '[cf] '[ca]
+
+instance {-# OVERLAPPING #-} Show (Somes (Show ': cs)) where
+  showsPrec d (Some x) = showParen (d > 10) $ showString "Some " . showsPrec 11 x
+
+instance {-# OVERLAPPABLE #-} Show (Somes cs) => Show (Somes (c ': cs)) where
+  showsPrec d (Some x) = showsPrec d (Some @cs x)
