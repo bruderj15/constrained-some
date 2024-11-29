@@ -57,6 +57,12 @@ data Somes1 csf csa where
 -- | Alias for 'Somes1' with just one 'Constraint'.
 type Some1 cf ca = Somes1 '[cf] '[ca]
 
+-- | Alias for 'Somes1' with a container @f@ and multple 'Constraint's @csa@ for its elements.
+type SomesF f csa = Somes1 '[(~) f] csa
+
+-- | Alias for 'SomeF' with just one 'Constraint' for its elements.
+type SomeF f c = SomesF f '[c]
+
 instance {-# OVERLAPPING #-} Show (Somes (Show ': cs)) where
   showsPrec d (Some x) = showParen (d > 10) $ showString "Some " . showsPrec 11 x
 
