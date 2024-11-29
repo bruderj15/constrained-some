@@ -6,6 +6,12 @@ file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [PVP versioning](https://pvp.haskell.org/).
 
+## v0.1.2 _(2024-11-29)_
+
+### Added
+- Added type aliases `SomesF` and `SomeF` for existentials with fixed containers
+- Added `mapSome` with infix `(<~$>)` and `traverseSome` with infix `(<~*>)`
+
 ## v0.1.1 _(2024-11-29)_
 
 ### Added
