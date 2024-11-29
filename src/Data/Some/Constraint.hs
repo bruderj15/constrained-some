@@ -10,8 +10,26 @@
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE ScopedTypeVariables #-}
 {-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE QuantifiedConstraints #-}
 
-module Data.Some.Constraint where
+module Data.Some.Constraint
+(
+  -- * Combining constraints
+  AllC
+
+  -- * Existentials
+  -- ** Flat existentials
+  , Somes(..), Some
+
+  -- ** Containerized existentials
+  -- *** Constrained containers
+  , Somes1(..), Some1
+
+  -- *** Fixed containers
+  , SomesF, SomeF
+  , mapSome, (<~$>)
+  , traverseSome, (<~*>)
+) where
 
 import Data.Kind
 
@@ -34,6 +52,12 @@ data Somes cs where
     (cs :: [Type -> Constraint])
     (a :: Type).
     AllC cs a => a -> Somes cs
+
+instance {-# OVERLAPPING #-} Show (Somes (Show ': cs)) where
+  showsPrec d (Some x) = showParen (d > 10) $ showString "Some " . showsPrec 11 x
+
+instance {-# OVERLAPPABLE #-} Show (Somes cs) => Show (Somes (c ': cs)) where
+  showsPrec d (Some x) = showsPrec d (Some @cs x)
 
 -- | Alias for 'Somes' with just one 'Constraint'.
 type Some c = Somes '[c]
@@ -82,8 +106,8 @@ infixl 4 <~*>
 (<~*>) :: Functor m => (forall a. AllC csa a => f a -> m (g a)) -> SomesF f csa -> m (SomesF g csa)
 (<~*>) = traverseSome
 
-instance {-# OVERLAPPING #-} Show (Somes (Show ': cs)) where
-  showsPrec d (Some x) = showParen (d > 10) $ showString "Some " . showsPrec 11 x
+instance {-# OVERLAPPING #-} (forall a. Show a => Show (f a)) => Show (SomesF f (Show ': cs)) where
+  showsPrec d (Some1 x) = showParen (d > 10) $ showString "Some " . showsPrec 11 x
 
-instance {-# OVERLAPPABLE #-} Show (Somes cs) => Show (Somes (c ': cs)) where
-  showsPrec d (Some x) = showsPrec d (Some @cs x)
+instance {-# OVERLAPPABLE #-} Show (SomesF f cs) => Show (SomesF f (c ': cs)) where
+  showsPrec d (Some1 x) = showsPrec d (Some1 @_ @('[(~) f]) @cs x)
