@@ -9,6 +9,7 @@
 {-# LANGUAGE TypeApplications #-}
 {-# LANGUAGE FlexibleContexts #-}
 {-# LANGUAGE ScopedTypeVariables #-}
+{-# LANGUAGE RankNTypes #-}
 
 module Data.Some.Constraint where
 
@@ -57,11 +58,29 @@ data Somes1 csf csa where
 -- | Alias for 'Somes1' with just one 'Constraint'.
 type Some1 cf ca = Somes1 '[cf] '[ca]
 
--- | Alias for 'Somes1' with a container @f@ and multple 'Constraint's @csa@ for its elements.
+-- | Alias for 'Somes1' with a container @f@ and multiple 'Constraint's @csa@ for its elements.
 type SomesF f csa = Somes1 '[(~) f] csa
 
 -- | Alias for 'SomeF' with just one 'Constraint' for its elements.
 type SomeF f c = SomesF f '[c]
+
+-- | Natural transformation of one container to another.
+mapSome :: (forall a. AllC csa a => f a -> g a) -> SomesF f csa -> SomesF g csa
+mapSome f (Some1 x) = Some1 (f x)
+
+infixl 4 <~$>
+-- | Infix version of 'mapSome'.
+(<~$>) :: (forall a. AllC csa a => f a -> g a) -> SomesF f csa -> SomesF g csa
+(<~$>) = mapSome
+
+-- | Natural transformation of one container to another - with side effects in @m@.
+traverseSome :: Functor m => (forall a. AllC csa a => f a -> m (g a)) -> SomesF f csa -> m (SomesF g csa)
+traverseSome f (Some1 x) = Some1 <$> f x
+
+infixl 4 <~*>
+-- | Infix version of 'traverseSome'.
+(<~*>) :: Functor m => (forall a. AllC csa a => f a -> m (g a)) -> SomesF f csa -> m (SomesF g csa)
+(<~*>) = traverseSome
 
 instance {-# OVERLAPPING #-} Show (Somes (Show ': cs)) where
   showsPrec d (Some x) = showParen (d > 10) $ showString "Some " . showsPrec 11 x
